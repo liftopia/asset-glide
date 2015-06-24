@@ -1,0 +1,12 @@
+{
+    "require": {
+        "php": ">=5.4.0",
+        "league/glide": "0.3.*",
+        "league/route": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Liftopia\\": "src/liftopia"
+        }
+    }
+}
