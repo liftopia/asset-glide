@@ -20,7 +20,7 @@ class FillCanvasSize extends Size
         $height = $this->getHeight($request->get('h'));
         $fit = $this->getFit($request->get('fit'));
         $crop = $this->getCrop($request->get('crop'));
-        $bgColor = $this->getBgColor($request->get('bgcolor'));
+        $bgColor = $this->getBgColor($request->get('bg'));
 
         list($width, $height) = $this->resolveMissingDimensions($image, $width, $height);
         list($width, $height) = $this->limitImageSize($width, $height);
