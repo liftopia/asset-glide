@@ -15,12 +15,28 @@ $cache = new League\Flysystem\Filesystem(
     new League\Flysystem\Adapter\Local(__DIR__ . '/../data/cache')
 );
 
-$server = League\Glide\ServerFactory::create([
-    'base_url' => '/img/',
-    'cache' => $cache,
-    'max_image_size' => 2000 * 2000,
-    'source' => $source,
-]);
+$maxImageSize = 2000 * 2000;
+
+$manipulators = [
+    new League\Glide\Api\Manipulator\Orientation(),
+    new League\Glide\Api\Manipulator\Rectangle(),
+    new Liftopia\Manipulator\FillCanvasSize($maxImageSize),
+    new League\Glide\Api\Manipulator\Brightness(),
+    new League\Glide\Api\Manipulator\Contrast(),
+    new League\Glide\Api\Manipulator\Gamma(),
+    new League\Glide\Api\Manipulator\Sharpen(),
+    new League\Glide\Api\Manipulator\Filter(),
+    new League\Glide\Api\Manipulator\Blur(),
+    new League\Glide\Api\Manipulator\Pixelate(),
+    new League\Glide\Api\Manipulator\Output(),
+];
+
+$imageManager = new Intervention\Image\ImageManager();
+
+$api = new League\Glide\Api\Api($imageManager, $manipulators);
+
+$server = new League\Glide\Server($source, $cache, $api);
+$server->setBaseUrl('/img/');
 
 $container = new League\Container\Container;
 $container->add('Symfony\Component\HttpFoundation\Request', function () {
